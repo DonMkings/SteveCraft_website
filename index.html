@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SteveCraft — Bespoke Shoes, Crafted for You</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="steveC.css">
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SteveCraft</a>
+  <ul class="nav-links">
+    <li><a href="#how">Our Process</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#order">Bespoke Order</a></li>
+  </ul>
+  <a href="#order" class="nav-cta">Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Est. Since the First Stitch</p>
+    <h1 class="hero-title">Shoes Crafted<br>to <em>Your Vision</em></h1>
+    <p class="hero-subtitle">Every pair begins with your story. Specify every detail — the leather, the sole, the occasion — and we hand-craft it with generations of expertise.</p>
+    <a href="#order" class="btn-primary">Begin Your Order</a>
+    <a href="#how" class="btn-outline">How It Works</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<script>
+  // simple slideshow: show slides one after another using data-delay (ms)
+  (function(){
+    const slideshows = document.querySelectorAll('.slideshow-inner');
+    slideshows.forEach(function(container){
+      const delay = parseInt(container.getAttribute('data-delay')) || 2000;
+      const slides = Array.from(container.querySelectorAll('.slide'));
+      if(!slides.length) return;
+      slides.forEach((s,i)=>{ s.style.display = (i===0)?'block':'none'; });
+      let idx = 0;
+      setInterval(()=>{
+        slides[idx].style.display = 'none';
+        idx = (idx + 1) % slides.length;
+        slides[idx].style.display = 'block';
+      }, delay);
+    });
+  })();
+</script>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <p class="section-label">The Craft</p>
+      <h2 class="section-title">From Specification<br>to <em>Masterpiece</em></h2>
+      <div class="divider"></div>
+      <p style="color:var(--cream3);max-width:480px;margin:0 auto;line-height:1.8;font-size:0.9rem;">Four simple steps stand between your imagination and a handcrafted pair that fits your life perfectly.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">✦</div>
+        <h3>Choose Your Style</h3>
+        <p>Select from our silhouettes — Oxford, Derby, Chelsea Boot, Loafer, Brogue, and more — as your canvas.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">✦</div>
+        <h3>Specify Materials</h3>
+        <p>Pick your leather grade, lining fabric, sole type, and hardware. Preview your choices as you go.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">✦</div>
+        <h3>Set the Occasion</h3>
+        <p>Tell us if the shoes are for you or a gift. Share the occasion, the recipient, and any personal notes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">✦</div>
+        <h3>We Craft & Deliver</h3>
+        <p>Our master cordwainers spend 60+ hours on every pair. Your shoes arrive in 4–6 weeks, perfectly finished.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER CONFIGURATOR -->
+<section class="configurator" id="order">
+  <div class="config-inner">
+    <div class="config-header">
+      <p class="section-label">Bespoke Order</p>
+      <h2 class="section-title">Design <em>Your</em> Shoes</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar" id="progressBar">
+      <div class="prog-step active" data-step="1" onclick="goToStep(1)">
+        <div class="prog-circle">1</div>
+        <span class="prog-label">Style</span>
+      </div>
+      <div class="prog-line" id="line1"></div>
+      <div class="prog-step" data-step="2" onclick="goToStep(2)">
+        <div class="prog-circle">2</div>
+        <span class="prog-label">Materials</span>
+      </div>
+      <div class="prog-line" id="line2"></div>
+      <div class="prog-step" data-step="3" onclick="goToStep(3)">
+        <div class="prog-circle">3</div>
+        <span class="prog-label">Occasion</span>
+      </div>
+      <div class="prog-line" id="line3"></div>
+      <div class="prog-step" data-step="4" onclick="goToStep(4)">
+        <div class="prog-circle">4</div>
+        <span class="prog-label">Details</span>
+      </div>
+      <div class="prog-line" id="line4"></div>
+      <div class="prog-step" data-step="5" onclick="goToStep(5)">
+        <div class="prog-circle">5</div>
+        <span class="prog-label">Review</span>
+      </div>
+    </div>
+
+    <div class="config-panels">
+
+      <!-- STEP 1: STYLE -->
+      <div class="config-panel active" id="panel1">
+        <div class="panel-form">
+          <div class="form-group">
+            <label class="form-label">Select Your Shoe Style</label>
+            <div class="option-grid" id="styleGrid">
+              <div class="option-card" onclick="selectOption('styleGrid', this, 'style', 'Oxford')">
+                <span class="option-icon">👞</span>
+                <div class="option-name">Oxford</div>
+                <div class="option-sub">Classic closed lacing</div>
+              </div>
+              <div class="option-card" onclick="selectOption('styleGrid', this, 'style', 'Derby')">
+                <span class="option-icon">🥿</span>
+                <div class="option-name">Derby</div>
+                <div class="option-sub">Open lacing, relaxed</div>
+              </div>
+              <div class="option-card" onclick="selectOption('styleGrid', this, 'style', 'Chelsea Boot')">
+                <span class="option-icon">🥾</span>
+                <div class="option-name">Chelsea Boot</div>
+                <div class="option-sub">Ankle, elastic panel</div>
+              </div>
+              <div class="option-card" onclick="selectOption('styleGrid', this, 'style', 'Loafer')">
+                <span class="option-icon">🩴</span>
+                <div class="option-name">Loafer</div>
+                <div class="option-sub">Slip-on, refined</div>
+              </div>
+              <div class="option-card" onclick="selectOption('styleGrid', this, 'style', 'Brogue')">
+                <span class="option-icon">👟</span>
+                <div class="option-name">Brogue</div>
+                <div class="option-sub">Perforated detailing</div>
+              </div>
+              <div class="option-card" onclick="selectOption('styleGrid', this, 'style', 'Monk Strap')">
+                <span class="option-icon">👡</span>
+                <div class="option-name">Monk Strap</div>
+                <div class="option-sub">Buckle closure</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Gender Fit</label>
+            <div class="option-grid two-col" id="genderGrid">
+              <div class="option-card" onclick="selectOption('genderGrid', this, 'gender', 'Men\'s')">
+                <span class="option-icon">🧍</span>
+                <div class="option-name">Men's</div>
+              </div>
+              <div class="option-card" onclick="selectOption('genderGrid', this, 'gender', 'Women\'s')">
+                <span class="option-icon">🧍‍♀️</span>
+                <div class="option-name">Women's</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-nav">
+            <button class="btn-primary" onclick="nextStep(1)">Next: Materials →</button>
+          </div>
+        </div>
+        <div class="panel-preview">
+          <div class="preview-title">Your Configuration</div>
+          <div class="shoe-preview-visual">
+            <svg class="shoe-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" id="shoePreviewSvg">
+              <defs>
+                <linearGradient id="shoeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8B4513" id="gradStop1"/>
+                  <stop offset="100%" stop-color="#5C2E00" id="gradStop2"/>
+                </linearGradient>
+              </defs>
+              <!-- Shoe outline -->
+              <path d="M 20 120 Q 30 140 60 142 L 220 140 Q 255 138 262 125 Q 268 112 240 108 L 200 106 L 180 60 Q 165 40 140 38 Q 110 36 90 50 Q 70 62 65 85 L 30 100 Q 18 108 20 120 Z" fill="url(#shoeGrad)" id="shoeBody"/>
+              <!-- Sole -->
+              <path d="M 20 125 Q 30 145 60 147 L 220 145 Q 255 143 262 130 L 262 125 Q 255 138 220 140 L 60 142 Q 30 140 20 120 Z" fill="#1a1008" opacity="0.8"/>
+              <!-- Toe cap -->
+              <path d="M 200 106 L 220 107 Q 255 110 262 125 Q 240 108 200 106 Z" fill="#6B3510" opacity="0.5"/>
+              <!-- Lace -->
+              <line x1="130" y1="60" x2="170" y2="60" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="125" y1="72" x2="175" y2="72" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="122" y1="84" x2="178" y2="84" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="preview-specs" id="previewSpecs">
+            <div class="spec-row"><span class="spec-key">Style</span><span class="spec-val" id="ps-style">—</span></div>
+            <div class="spec-row"><span class="spec-key">Gender</span><span class="spec-val" id="ps-gender">—</span></div>
+            <div class="spec-row"><span class="spec-key">Leather</span><span class="spec-val" id="ps-leather">—</span></div>
+            <div class="spec-row"><span class="spec-key">Colour</span><span class="spec-val" id="ps-color">—</span></div>
+            <div class="spec-row"><span class="spec-key">Sole</span><span class="spec-val" id="ps-sole">—</span></div>
+            <div class="spec-row"><span class="spec-key">Occasion</span><span class="spec-val" id="ps-occasion">—</span></div>
+            <div class="spec-row"><span class="spec-key">Purpose</span><span class="spec-val" id="ps-purpose">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: MATERIALS -->
+      <div class="config-panel" id="panel2">
+        <div class="panel-form">
+          <div class="form-group">
+            <label class="form-label">Leather Grade</label>
+            <div class="option-grid two-col" id="leatherGrid">
+              <div class="option-card" onclick="selectOption('leatherGrid', this, 'leather', 'Full-Grain Calf')">
+                <div class="option-name">Full-Grain Calf</div>
+                <div class="option-sub">The finest. Ages beautifully</div>
+              </div>
+              <div class="option-card" onclick="selectOption('leatherGrid', this, 'leather', 'Top-Grain Calf')">
+                <div class="option-name">Top-Grain Calf</div>
+                <div class="option-sub">Smooth & uniform finish</div>
+              </div>
+              <div class="option-card" onclick="selectOption('leatherGrid', this, 'leather', 'Suede')">
+                <div class="option-name">Suede</div>
+                <div class="option-sub">Soft napped texture</div>
+              </div>
+              <div class="option-card" onclick="selectOption('leatherGrid', this, 'leather', 'Cordovan')">
+                <div class="option-name">Shell Cordovan</div>
+                <div class="option-sub">Equine, ultra-durable</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Colour</label>
+            <div class="color-palette" id="colorPalette">
+              <div class="color-swatch selected" style="background:#8B4513;" data-color="Tan Brown" onclick="selectColor(this)" title="Tan Brown"></div>
+              <div class="color-swatch" style="background:#1a0a00;" data-color="Jet Black" onclick="selectColor(this)" title="Jet Black"></div>
+              <div class="color-swatch" style="background:#3d1f00;" data-color="Dark Espresso" onclick="selectColor(this)" title="Dark Espresso"></div>
+              <div class="color-swatch" style="background:#7a2b00;" data-color="Oxblood Red" onclick="selectColor(this)" title="Oxblood Red"></div>
+              <div class="color-swatch" style="background:#c5a06b;" data-color="Cognac" onclick="selectColor(this)" title="Cognac"></div>
+              <div class="color-swatch" style="background:#3b5998;" data-color="Navy Blue" onclick="selectColor(this)" title="Navy Blue"></div>
+              <div class="color-swatch" style="background:#4a4a4a;" data-color="Charcoal" onclick="selectColor(this)" title="Charcoal"></div>
+              <div class="color-swatch" style="background:#d4af7a;" data-color="Sand" onclick="selectColor(this)" title="Sand"></div>
+            </div>
+            <p id="colorLabel" style="font-size:0.75rem;color:var(--gold);margin-top:0.6rem;font-family:var(--serif)">Tan Brown</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Sole Construction</label>
+            <div class="option-grid" id="soleGrid">
+              <div class="option-card" onclick="selectOption('soleGrid', this, 'sole', 'Goodyear Welt')">
+                <div class="option-name">Goodyear Welt</div>
+                <div class="option-sub">Resoleable. Heirloom</div>
+              </div>
+              <div class="option-card" onclick="selectOption('soleGrid', this, 'sole', 'Blake Stitch')">
+                <div class="option-name">Blake Stitch</div>
+                <div class="option-sub">Sleek, closer fit</div>
+              </div>
+              <div class="option-card" onclick="selectOption('soleGrid', this, 'sole', 'Norwegian Welt')">
+                <div class="option-name">Norwegian Welt</div>
+                <div class="option-sub">Hardy, weatherproof</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Lining</label>
+            <div class="option-grid two-col" id="liningGrid">
+              <div class="option-card" onclick="selectOption('liningGrid', this, 'lining', 'Leather Lined')">
+                <div class="option-name">Leather Lined</div>
+                <div class="option-sub">Traditional, breathable</div>
+              </div>
+              <div class="option-card" onclick="selectOption('liningGrid', this, 'lining', 'Cashmere Lined')">
+                <div class="option-name">Cashmere Lined</div>
+                <div class="option-sub">Luxuriously warm</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-nav">
+            <button class="btn-outline" onclick="prevStep(2)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(2)">Next: Occasion →</button>
+          </div>
+        </div>
+        <div class="panel-preview">
+          <div class="preview-title">Your Configuration</div>
+          <div class="shoe-preview-visual">
+            <svg class="shoe-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="shoeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8B4513" id="gradStop3"/>
+                  <stop offset="100%" stop-color="#5C2E00" id="gradStop4"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 120 Q 30 140 60 142 L 220 140 Q 255 138 262 125 Q 268 112 240 108 L 200 106 L 180 60 Q 165 40 140 38 Q 110 36 90 50 Q 70 62 65 85 L 30 100 Q 18 108 20 120 Z" fill="url(#shoeGrad2)" id="shoeBody2"/>
+              <path d="M 20 125 Q 30 145 60 147 L 220 145 Q 255 143 262 130 L 262 125 Q 255 138 220 140 L 60 142 Q 30 140 20 120 Z" fill="#1a1008" opacity="0.8"/>
+              <line x1="130" y1="60" x2="170" y2="60" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="125" y1="72" x2="175" y2="72" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="122" y1="84" x2="178" y2="84" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="preview-specs">
+            <div class="spec-row"><span class="spec-key">Style</span><span class="spec-val" id="ps-style2">—</span></div>
+            <div class="spec-row"><span class="spec-key">Leather</span><span class="spec-val" id="ps-leather2">—</span></div>
+            <div class="spec-row"><span class="spec-key">Colour</span><span class="spec-val" id="ps-color2">—</span></div>
+            <div class="spec-row"><span class="spec-key">Sole</span><span class="spec-val" id="ps-sole2">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: OCCASION -->
+      <div class="config-panel" id="panel3">
+        <div class="panel-form">
+          <div class="form-group">
+            <label class="form-label">Who Is This For?</label>
+            <div class="option-grid two-col" id="purposeGrid">
+              <div class="option-card" onclick="selectOption('purposeGrid', this, 'purpose', 'For Myself')">
+                <span class="option-icon">🧑</span>
+                <div class="option-name">For Myself</div>
+                <div class="option-sub">Personal pair</div>
+              </div>
+              <div class="option-card" onclick="selectOption('purposeGrid', this, 'purpose', 'As a Gift')">
+                <span class="option-icon">🎁</span>
+                <div class="option-name">As a Gift</div>
+                <div class="option-sub">For someone special</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Occasion / Purpose</label>
+            <div class="tag-grid" id="occasionGrid">
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Wedding')">Wedding</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Black Tie / Formal')">Black Tie / Formal</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Business / Office')">Business / Office</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Graduation')">Graduation</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Everyday Wear')">Everyday Wear</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Birthday Gift')">Birthday Gift</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Anniversary')">Anniversary</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Travel')">Travel</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Cultural Event')">Cultural Event</div>
+              <div class="tag" onclick="selectTag(this, 'occasion', 'Other')">Other</div>
+            </div>
+          </div>
+
+          <div class="form-group" id="giftFields" style="display:none;">
+            <label class="form-label">Gift Details</label>
+            <div class="form-row">
+              <div class="input-group">
+                <label class="input-label">Recipient's Name</label>
+                <input type="text" class="form-input" id="recipientName" placeholder="e.g. Chidi Obi" oninput="updateSpec('recipientName', this.value)">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Gift Date</label>
+                <input type="date" class="form-input" id="giftDate">
+              </div>
+            </div>
+            <div style="margin-top:0.8rem">
+              <label class="input-label">Gift Message (optional)</label>
+              <textarea class="form-textarea" id="giftMsg" placeholder="A personal note to include with the gift…"></textarea>
+            </div>
+          </div>
+
+          <div class="panel-nav">
+            <button class="btn-outline" onclick="prevStep(3)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(3)">Next: Your Details →</button>
+          </div>
+        </div>
+        <div class="panel-preview">
+          <div class="preview-title">Your Configuration</div>
+          <div class="shoe-preview-visual">
+            <svg class="shoe-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="shoeGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8B4513" id="gradStop5"/>
+                  <stop offset="100%" stop-color="#5C2E00" id="gradStop6"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 120 Q 30 140 60 142 L 220 140 Q 255 138 262 125 Q 268 112 240 108 L 200 106 L 180 60 Q 165 40 140 38 Q 110 36 90 50 Q 70 62 65 85 L 30 100 Q 18 108 20 120 Z" fill="url(#shoeGrad3)" id="shoeBody3"/>
+              <path d="M 20 125 Q 30 145 60 147 L 220 145 Q 255 143 262 130 L 262 125 Q 255 138 220 140 L 60 142 Q 30 140 20 120 Z" fill="#1a1008" opacity="0.8"/>
+              <line x1="130" y1="60" x2="170" y2="60" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="125" y1="72" x2="175" y2="72" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="122" y1="84" x2="178" y2="84" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="preview-specs">
+            <div class="spec-row"><span class="spec-key">Style</span><span class="spec-val" id="ps-style3">—</span></div>
+            <div class="spec-row"><span class="spec-key">Purpose</span><span class="spec-val" id="ps-purpose3">—</span></div>
+            <div class="spec-row"><span class="spec-key">Occasion</span><span class="spec-val" id="ps-occasion3">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: PERSONAL DETAILS -->
+      <div class="config-panel" id="panel4">
+        <div class="panel-form">
+          <div class="form-group">
+            <label class="form-label">Your Details</label>
+            <div class="form-row">
+              <div class="input-group">
+                <label class="input-label">First Name</label>
+                <input type="text" class="form-input" id="firstName" placeholder="Emeka">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Last Name</label>
+                <input type="text" class="form-input" id="lastName" placeholder="Okafor">
+              </div>
+            </div>
+            <div style="margin-top:0.8rem">
+              <label class="input-label">Email Address</label>
+              <input type="email" class="form-input" id="email" placeholder="emeka@example.com">
+            </div>
+            <div style="margin-top:0.8rem">
+              <label class="input-label">Phone Number</label>
+              <input type="tel" class="form-input" id="phone" placeholder="+234 ...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Shoe Measurements</label>
+            <div class="form-row">
+              <div class="input-group">
+                <label class="input-label">Shoe Size (EU)</label>
+                <select class="form-select" id="shoeSize">
+                  <option value="">Select size</option>
+                  <option>36</option><option>37</option><option>38</option><option>39</option>
+                  <option>40</option><option>41</option><option>42</option><option>43</option>
+                  <option>44</option><option>45</option><option>46</option><option>47</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Foot Width</label>
+                <select class="form-select" id="footWidth">
+                  <option value="">Select width</option>
+                  <option>Narrow (C)</option>
+                  <option>Standard (D)</option>
+                  <option>Wide (E)</option>
+                  <option>Extra Wide (EE)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Special Specifications or Notes</label>
+            <textarea class="form-textarea" id="specialNotes" placeholder="Describe any unique requirements — high instep, orthopedic considerations, monogram initials, specific stitching pattern, heel height preference…"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Delivery Address</label>
+            <input type="text" class="form-input" id="address" placeholder="Street address" style="margin-bottom:0.5rem">
+            <div class="form-row" style="margin-top:0.5rem">
+              <input type="text" class="form-input" id="city" placeholder="City">
+              <input type="text" class="form-input" id="country" placeholder="Country">
+            </div>
+          </div>
+
+          <div class="panel-nav">
+            <button class="btn-outline" onclick="prevStep(4)">← Back</button>
+            <button class="btn-primary" onclick="nextStep(4)">Review Order →</button>
+          </div>
+        </div>
+        <div class="panel-preview">
+          <div class="preview-title">Your Configuration</div>
+          <div class="shoe-preview-visual">
+            <svg class="shoe-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="shoeGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8B4513" id="gradStop7"/>
+                  <stop offset="100%" stop-color="#5C2E00" id="gradStop8"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 120 Q 30 140 60 142 L 220 140 Q 255 138 262 125 Q 268 112 240 108 L 200 106 L 180 60 Q 165 40 140 38 Q 110 36 90 50 Q 70 62 65 85 L 30 100 Q 18 108 20 120 Z" fill="url(#shoeGrad4)" id="shoeBody4"/>
+              <path d="M 20 125 Q 30 145 60 147 L 220 145 Q 255 143 262 130 L 262 125 Q 255 138 220 140 L 60 142 Q 30 140 20 120 Z" fill="#1a1008" opacity="0.8"/>
+              <line x1="130" y1="60" x2="170" y2="60" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="125" y1="72" x2="175" y2="72" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+              <line x1="122" y1="84" x2="178" y2="84" stroke="#c9a84c" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="preview-specs">
+            <div class="spec-row"><span class="spec-key">Style</span><span class="spec-val" id="ps-style4">—</span></div>
+            <div class="spec-row"><span class="spec-key">Leather</span><span class="spec-val" id="ps-leather4">—</span></div>
+            <div class="spec-row"><span class="spec-key">Colour</span><span class="spec-val" id="ps-color4">—</span></div>
+            <div class="spec-row"><span class="spec-key">Sole</span><span class="spec-val" id="ps-sole4">—</span></div>
+            <div class="spec-row"><span class="spec-key">Occasion</span><span class="spec-val" id="ps-occasion4">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: REVIEW & CONFIRM -->
+      <div class="config-panel" id="panel5">
+        <div class="panel-form" style="grid-column: 1/-1;">
+          <div class="summary-card">
+            <p class="section-label" style="margin-bottom:0.5rem">Order Summary</p>
+            <h3 style="font-family:var(--serif);font-size:1.4rem;color:var(--cream);font-weight:300">Your Bespoke Commission</h3>
+            <div class="summary-grid" id="summaryGrid">
+              <div class="summary-item"><div class="s-key">Style</div><div class="s-val" id="sum-style">—</div></div>
+              <div class="summary-item"><div class="s-key">Gender Fit</div><div class="s-val" id="sum-gender">—</div></div>
+              <div class="summary-item"><div class="s-key">Leather</div><div class="s-val" id="sum-leather">—</div></div>
+              <div class="summary-item"><div class="s-key">Colour</div><div class="s-val" id="sum-color">—</div></div>
+              <div class="summary-item"><div class="s-key">Sole</div><div class="s-val" id="sum-sole">—</div></div>
+              <div class="summary-item"><div class="s-key">Lining</div><div class="s-val" id="sum-lining">—</div></div>
+              <div class="summary-item"><div class="s-key">Purpose</div><div class="s-val" id="sum-purpose">—</div></div>
+              <div class="summary-item"><div class="s-key">Occasion</div><div class="s-val" id="sum-occasion">—</div></div>
+              <div class="summary-item"><div class="s-key">Shoe Size (EU)</div><div class="s-val" id="sum-size">—</div></div>
+              <div class="summary-item"><div class="s-key">Foot Width</div><div class="s-val" id="sum-width">—</div></div>
+            </div>
+            <div id="sum-notes-row" style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);display:none">
+              <div class="s-key" style="margin-bottom:0.4rem">Special Notes</div>
+              <div style="font-family:var(--serif);color:var(--cream2);font-size:0.95rem;line-height:1.7" id="sum-notes"></div>
+            </div>
+            <div class="price-display">
+              <div>
+                <div class="price-label">Estimated Investment</div>
+                <div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem">Final quote within 24hrs of submission</div>
+              </div>
+              <div class="price-amount" id="priceEstimate">$1,200 – $2,400</div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg2);border:1px solid var(--border);padding:1.5rem;margin-bottom:1.5rem;">
+            <p style="font-size:0.8rem;color:var(--cream3);line-height:1.8;">By submitting this order you agree to our <a href="#" style="color:var(--gold3)">commission terms</a>. A 50% deposit is required to begin crafting. Estimated delivery: <strong style="color:var(--cream2)">4–6 weeks</strong>. Our artisan will contact you within 24 hours.</p>
+          </div>
+
+          <div class="panel-nav">
+            <button class="btn-outline" onclick="prevStep(5)">← Edit Order</button>
+            <button class="btn-primary" onclick="submitOrder()">Confirm &amp; Commission →</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end config-panels -->
+
+    <!-- SUCCESS STATE -->
+    <div class="success-panel" id="successPanel">
+      <div class="success-icon">✦</div>
+      <h2>Your Commission Is Placed</h2>
+      <div class="order-ref" id="orderRef">CW-2024-0000</div>
+      <p>Thank you. Our master cordwainer will personally review your specifications and reach out within 24 hours to confirm your order and collect the deposit. A pair of extraordinary shoes awaits.</p>
+      <a href="#order" class="btn-primary" onclick="resetOrder()">Place Another Order</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-header">
+      <p class="section-label">Our Work</p>
+      <h2 class="section-title">Crafted with <em>Devotion</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background:#1a100a;">
+        <img src="steeC imgae/oxford-shoes-womens.png" alt="The Knightsbridge Monk" class="gallery-image" style="width:100%;height:auto;display:block;object-fit:cover;" />
+        <div class="gallery-caption"><h4>The Mayfair Oxford</h4><p>Full-Grain Calf · Tan Brown</p></div>
+      </div>
+      <div class="gallery-item" style="background:#0f1318;">
+        <img src="steeC imgae/The Knightsbridge Monk.png" alt="The Knightsbridge Monk" class="gallery-image" style="width:100%;height:auto;display:block;object-fit:cover;" />
+        <div class="gallery-caption"><h4>The Knightsbridge Monk</h4><p>Full-Grain Calf · Jet Black</p></div>
+      </div>
+      <div class="gallery-item" style="background:#180f0c;">
+        <img src="steeC imgae/The Chelsea Boot.png" alt="The Knightsbridge Monk" class="gallery-image" style="width:100%;height:auto;display:block;object-fit:cover;" />
+        <div class="gallery-caption"><h4>The Chelsea Boot</h4><p>Top-Grain Calf · Oxblood Red</p></div>
+      </div>
+      <div class="gallery-item" style="background:#131009;">
+        <img src="steeC imgae/The Cognac Loafer.png" alt="The Knightsbridge Monk" class="gallery-image" style="width:100%;height:auto;display:block;object-fit:cover;" />>
+        <div class="gallery-caption"><h4>The Cognac Loafer</h4><p>Full-Grain Calf · Cognac</p></div>
+      </div>
+      <div class="gallery-item" style="background:#0c1018;">
+        <img src="steeC imgae/The Navy Brogue.png" alt="The Knightsbridge Monk" class="gallery-image" style="width:100%;height:auto;display:block;object-fit:cover;" />
+        <div class="gallery-caption"><h4>The Navy Brogue</h4><p>Top-Grain Calf · Navy Blue</p></div>
+      </div>
+      <div class="gallery-item" style="background:#111009;">
+        <img src="steeC imgae/The Charcoal Derby.png" alt="The Knightsbridge Monk" class="gallery-image" style="width:100%;height:auto;display:block;object-fit:cover;" />
+        <div class="gallery-caption"><h4>The Charcoal Derby</h4><p>Suede · Charcoal</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="test-inner">
+    <p class="section-label">Client Stories</p>
+    <h2 class="section-title">Worn with <em>Pride</em></h2>
+    <div class="divider" style="margin:1.5rem auto;"></div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★ ★ ★ ★ ★</div>
+        <p class="test-text">"I ordered the Oxford for my wedding in Lagos. The craftsmanship was extraordinary — every detail exactly as I specified. People asked about my shoes all evening."</p>
+        <div class="test-name">Chukwuemeka A. — Lagos</div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★ ★ ★ ★ ★</div>
+        <p class="test-text">"I gifted my father a pair of Chelsea Boots for his 60th birthday. The personalisation service and the gift packaging were exquisite. He was moved to tears."</p>
+        <div class="test-name">Adaeze O. — Abuja</div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★ ★ ★ ★ ★</div>
+        <p class="test-text">"As someone with wide feet, finding shoes has always been a struggle. Specifying the exact width and watching them craft it perfectly was a revelation."</p>
+        <div class="test-name">Babatunde F. — Port Harcourt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Cordwainer</a>
+      <p>Master shoemakers crafting bespoke footwear with old-world devotion and modern precision. Every pair, a heirloom.</p>
+    </div>
+    <div class="footer-col">
+      <h5>The Craft</h5>
+      <ul>
+        <li><a href="#">Our Process</a></li>
+        <li><a href="#">Materials</a></li>
+        <li><a href="#">Artisans</a></li>
+        <li><a href="#">Gallery</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <ul>
+        <li><a href="#">Order Tracking</a></li>
+        <li><a href="#">Care Guide</a></li>
+        <li><a href="#">Sizing</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Cordwainer. All rights reserved.</p>
+    <p style="color:var(--gold3);font-family:var(--serif);font-style:italic">Handcrafted with devotion.</p>
+  </div>
+</footer>
+
+<script>
+  // ---- STATE ----
+  const order = {
+    style:'', gender:'', leather:'', color:'Tan Brown', sole:'', lining:'',
+    purpose:'', occasion:'', notes:'', size:'', width:''
+  };
+  let currentStep = 1;
+  const totalSteps = 5;
+
+  const colorMap = {
+    '#8B4513':'Tan Brown','#1a0a00':'Jet Black','#3d1f00':'Dark Espresso',
+    '#7a2b00':'Oxblood Red','#c5a06b':'Cognac','#3b5998':'Navy Blue',
+    '#4a4a4a':'Charcoal','#d4af7a':'Sand'
+  };
+  const shoeColorLight = {
+    'Tan Brown':['#C8894A','#7A4010'],'Jet Black':['#3a2a20','#110800'],
+    'Dark Espresso':['#6B3A18','#2e1400'],'Oxblood Red':['#a83a10','#5C1800'],
+    'Cognac':['#e0b882','#9a7230'],'Navy Blue':['#5072B8','#1a2e6e'],
+    'Charcoal':['#6e6e6e','#2a2a2a'],'Sand':['#e8d09e','#b0983a']
+  };
+  const priceMap = {
+    'Full-Grain Calf':'$1,600 – $2,800','Top-Grain Calf':'$1,200 – $2,200',
+    'Suede':'$1,000 – $1,800','Cordovan':'$2,200 – $3,800'
+  };
+
+  function updateAllPreviews() {
+    const fields = ['style','leather','color','sole','occasion','purpose'];
+    fields.forEach(f => {
+      document.querySelectorAll(`[id^="ps-${f}"]`).forEach(el => { el.textContent = order[f] || '—'; });
+    });
+    ['style2','leather2','color2','sole2','style3','purpose3','occasion3','style4','leather4','color4','sole4','occasion4'].forEach(id => {
+      const el = document.getElementById('ps-'+id);
+      if(!el) return;
+      const key = id.replace(/\d+$/,'');
+      el.textContent = order[key] || '—';
+    });
+    updateShoeColors();
+    if(order.leather) {
+      document.getElementById('priceEstimate').textContent = priceMap[order.leather] || '$1,200 – $2,400';
+    }
+  }
+
+  function updateShoeColors() {
+    const cols = shoeColorLight[order.color] || ['#8B4513','#5C2E00'];
+    document.querySelectorAll('[id^="gradStop"]').forEach((stop,i) => {
+      stop.setAttribute('stop-color', i%2===0 ? cols[0] : cols[1]);
+    });
+  }
+
+  function selectOption(gridId, el, key, val) {
+    document.querySelectorAll(`#${gridId} .option-card`).forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    order[key] = val;
+    if(key === 'purpose') {
+      document.getElementById('giftFields').style.display = val==='As a Gift' ? 'block' : 'none';
+    }
+    updateAllPreviews();
+    updateSummary();
+  }
+
+  function selectTag(el, key, val) {
+    if(el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      order[key] = '';
+    } else {
+      document.querySelectorAll(`#occasionGrid .tag`).forEach(t => t.classList.remove('selected'));
+      el.classList.add('selected');
+      order[key] = val;
+    }
+    updateAllPreviews();
+    updateSummary();
+  }
+
+  function selectColor(el) {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    order.color = colorMap[el.dataset.color] || el.dataset.color;
+    document.getElementById('colorLabel').textContent = order.color;
+    updateAllPreviews();
+    updateSummary();
+  }
+
+  function updateSpec(id, val) { }
+
+  function updateSummary() {
+    const s = order;
+    document.getElementById('sum-style').textContent = s.style || '—';
+    document.getElementById('sum-gender').textContent = s.gender || '—';
+    document.getElementById('sum-leather').textContent = s.leather || '—';
+    document.getElementById('sum-color').textContent = s.color || '—';
+    document.getElementById('sum-sole').textContent = s.sole || '—';
+    document.getElementById('sum-lining').textContent = s.lining || '—';
+    document.getElementById('sum-purpose').textContent = s.purpose || '—';
+    document.getElementById('sum-occasion').textContent = s.occasion || '—';
+    const sz = document.getElementById('shoeSize');
+    const wd = document.getElementById('footWidth');
+    if(sz) document.getElementById('sum-size').textContent = sz.value || '—';
+    if(wd) document.getElementById('sum-width').textContent = wd.value || '—';
+    const notes = (document.getElementById('specialNotes') || {}).value || '';
+    const notesRow = document.getElementById('sum-notes-row');
+    if(notes && notesRow) {
+      notesRow.style.display = 'block';
+      document.getElementById('sum-notes').textContent = notes;
+    }
+  }
+
+  function goToStep(n) {
+    if(n > currentStep + 1) return;
+    currentStep = n;
+    showStep(n);
+  }
+
+  function nextStep(from) {
+    if(from === totalSteps) return;
+    updateSummary();
+    currentStep = from + 1;
+    showStep(currentStep);
+  }
+
+  function prevStep(from) {
+    currentStep = from - 1;
+    showStep(currentStep);
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.config-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('panel' + n);
+    if(panel) panel.classList.add('active');
+    updateProgress(n);
+    window.scrollTo({ top: document.getElementById('order').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  function updateProgress(n) {
+    document.querySelectorAll('.prog-step').forEach((s,i) => {
+      s.classList.remove('active','done');
+      const step = i+1;
+      if(step < n) s.classList.add('done');
+      else if(step === n) s.classList.add('active');
+    });
+    for(let i=1; i<=4; i++) {
+      const line = document.getElementById('line'+i);
+      if(line) line.classList.toggle('done', i < n);
+    }
+  }
+
+  function submitOrder() {
+    const ref = 'CW-2024-' + Math.floor(1000 + Math.random()*9000);
+    document.getElementById('orderRef').textContent = ref;
+    document.querySelectorAll('.config-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('progressBar').style.display = 'none';
+    document.getElementById('successPanel').classList.add('active');
+    window.scrollTo({ top: document.getElementById('order').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  function resetOrder() {
+    document.getElementById('successPanel').classList.remove('active');
+    document.getElementById('progressBar').style.display = 'flex';
+    currentStep = 1;
+    showStep(1);
+  }
+
+  // Smooth scroll nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
