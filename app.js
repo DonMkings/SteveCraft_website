@@ -1,7 +1,7 @@
 import {STYLES,COLOURS,FINISHES,SOLES,WIDTHS,SIZES,DEFAULT_DESIGN,normaliseDesign,validateRequest,buildMessage,contactLinks} from './model.js';
 import {shoeSVG} from './shoe.js';
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
-let design={...DEFAULT_DESIGN},view='profile',message='';
+let design={...DEFAULT_DESIGN},view='profile',message='',pendingDetails=null;
 try{const saved=localStorage.getItem('steve-craft-design');if(saved)design=normaliseDesign(JSON.parse(saved));}catch{}
 for(const [key,value] of Object.entries(COLOURS)){
  const b=document.createElement('button');b.type='button';b.className='swatch';b.dataset.colour=key;b.style.backgroundColor=value.hex;b.setAttribute('aria-label',value.name);b.setAttribute('title',value.name);b.setAttribute('aria-pressed',String(design.colour===key));$('#colour-choices').append(b);
@@ -29,16 +29,43 @@ const quoteDialog=$('#quote-dialog');
 function renderSummary(){
  const container=$('#quote-summary');container.replaceChildren();
  const title=document.createElement('strong');title.className='quote-summary-style';title.textContent=STYLES[design.style];container.append(title);
- for(const [name,value]of [['Colour',COLOURS[design.colour].name],['Finish',FINISHES[design.finish]],['Sole',SOLES[design.sole]],['Size',design.size?'EU '+design.size:'Choose below'],['Width',WIDTHS[design.width]],['Initials',design.initials||'None'],['Purpose',design.purpose==='gift'?'As a gift':'For myself'],['Occasion',design.occasion||'Not specified'],...(design.purpose==='gift'?[['Recipient',design.recipientName||'Not specified'],['Gift date',design.giftDate||'Not specified']]:[])]){const div=document.createElement('div'),label=document.createElement('span'),strong=document.createElement('strong');label.textContent=name;strong.textContent=value;div.append(label,strong);container.append(div);}
+ for(const [name,value]of [['Colour',COLOURS[design.colour].name],['Finish',FINISHES[design.finish]],['Sole',SOLES[design.sole]],['Size',design.size?'EU '+design.size:'Choose below'],['Width',WIDTHS[design.width]],['Initials',design.initials||'None'],['Purpose',design.purpose==='gift'?'As a gift':'For myself'],['Occasion',design.occasion||'Not specified'],...(design.purpose==='gift'?[['Recipient',design.recipientName||'Not specified'],['Gift date',design.giftDate||'Not specified'],['Gift message',design.giftMessage||'None']]:[])]){const div=document.createElement('div'),label=document.createElement('span'),strong=document.createElement('strong');label.textContent=name;strong.textContent=value;div.append(label,strong);container.append(div);}
 }
-$('#request-quote').addEventListener('click',()=>{renderSummary();$('#quote-size').value=design.size;$('#quote-form').hidden=false;$('#send-options').hidden=true;$('#form-error').textContent='';quoteDialog.showModal();});
+$('#request-quote').addEventListener('click',()=>{renderSummary();$('#quote-size').value=design.size;$('#quote-form').hidden=false;$('#quote-review').hidden=true;$('#send-options').hidden=true;$('#form-error').textContent='';quoteDialog.showModal();});
 $('#quote-size').addEventListener('change',e=>{design.size=e.target.value;render();renderSummary();});
+$('#delivery-method').addEventListener('change',e=>{const enabled=e.target.value==='delivery';$('#delivery-fields').hidden=!enabled;$('#delivery-city').required=enabled;$('#delivery-state').required=enabled;});
+function addReviewItem(container,label,value,heading=false){
+  const item=document.createElement('div');item.className=heading?'quote-review-heading':'quote-review-item';
+  if(heading){item.textContent=label;}else{const small=document.createElement('span');small.textContent=label;const strong=document.createElement('strong');strong.textContent=String(value||'Not specified');item.append(small,strong);}
+  container.append(item);
+}
+function renderFullReview(c){
+ renderSummary();
+ const container=$('#review-summary');container.replaceChildren();
+ addReviewItem(container,'YOUR FOOTWEAR',null,true);
+ for(const [label,value] of [['Style',STYLES[design.style]],['Colour',COLOURS[design.colour].name],['Finish',FINISHES[design.finish]],['Sole',SOLES[design.sole]],['Size','EU '+design.size],['Width',WIDTHS[design.width]],['Initials',design.initials||'None'],['Occasion',design.occasion||'Not specified'],['For',design.purpose==='gift'?'A gift':'Myself']])addReviewItem(container,label,value);
+ if(design.purpose==='gift')for(const [label,value] of [['Recipient',design.recipientName||'Not specified'],['Gift date',design.giftDate||'Not specified'],['Gift message',design.giftMessage||'None']])addReviewItem(container,label,value);
+ addReviewItem(container,'FIT & DELIVERY',null,true);
+ addReviewItem(container,'Measurements',c.measurements||'Not supplied');
+ addReviewItem(container,'Preference',{delivery:'Delivery',pickup:'Collection / pickup',discuss:'Discuss later'}[c.deliveryMethod]);
+ if(c.deliveryMethod==='delivery'){addReviewItem(container,'City',c.deliveryCity);addReviewItem(container,'State',c.deliveryState);}
+ addReviewItem(container,'CONTACT & NOTES',null,true);
+ for(const [label,value] of [['Name',c.name],['Email',c.email],['Phone',c.phone||'Not supplied'],['Notes',c.notes||'None']])addReviewItem(container,label,value);
+}
 $('#quote-form').addEventListener('submit',e=>{
  e.preventDefault();const values=Object.fromEntries(new FormData(e.currentTarget));design.size=values.size;
  const errors=validateRequest(design,values);if(errors.length){$('#form-error').textContent=errors.join('\n');return;}
- render();renderSummary();message=buildMessage(design,values);const links=contactLinks(message);$('#send-whatsapp').href=links.whatsapp;$('#send-email').href=links.email;$('#quote-form').hidden=true;$('#send-options').hidden=false;$('#copy-status').textContent='';$('#send-whatsapp').focus();
+ $('#form-error').textContent='';pendingDetails=values;render();renderFullReview(values);
+ $('#quote-form').hidden=true;$('#quote-review').hidden=false;$('#send-options').hidden=true;
+ $('#edit-review').focus();
 });
-$('#edit-request').addEventListener('click',()=>{$('#send-options').hidden=true;$('#quote-form').hidden=false;$('#customer-name').focus();});
+$('#edit-review').addEventListener('click',()=>{$('#quote-review').hidden=true;$('#quote-form').hidden=false;$('#customer-name').focus();});
+$('#confirm-request').addEventListener('click',()=>{
+ if(!pendingDetails)return;message=buildMessage(design,pendingDetails);
+ const links=contactLinks(message);$('#send-whatsapp').href=links.whatsapp;$('#send-email').href=links.email;
+ $('#quote-review').hidden=true;$('#send-options').hidden=false;$('#copy-status').textContent='';$('#send-whatsapp').focus();
+});
+$('#edit-request').addEventListener('click',()=>{$('#send-options').hidden=true;$('#quote-review').hidden=false;$('#edit-review').focus();});
 function downloadRequest(){const blob=new Blob([message],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='steve-craft-quote-request.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 $('#download-request').addEventListener('click',downloadRequest);
 $('#copy-request').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(message);$('#copy-status').textContent='Request copied. Paste it into a message to Steve Craft.';}catch{$('#copy-status').textContent='Clipboard access is unavailable. Use Download request to keep a copy.';}});
