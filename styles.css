@@ -8,3 +8,105 @@
 
 /* SteveCraft fit, delivery and quotation review */
 .quote-form-section{border-top:1px solid var(--line);padding:18px 0 12px;margin-top:16px}.quote-section-title{font-family:var(--serif);font-size:21px;font-weight:400;margin:0 0 14px}.delivery-fields{margin-top:14px}.review-intro{color:var(--muted);font-size:11px;line-height:1.8}.review-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}.review-actions .button{gap:12px}.review-actions .outline{margin-top:0}.quote-review-item{min-width:0;overflow-wrap:anywhere}.quote-review-item strong{overflow-wrap:anywhere}.quote-summary .quote-review-heading{grid-column:1/-1;font-size:12px;font-weight:600;border-bottom:1px solid #cfc4b4;padding:10px 0 4px}.quote-summary .quote-review-heading:first-child{padding-top:0}@media(max-width:520px){.review-actions{grid-template-columns:1fr}.quote-summary{grid-template-columns:1fr 1fr}}
+
+
+/* Readability refresh — preserve the Codex visual identity */
+body{font-size:16px;line-height:1.7}
+.announcement{font-size:12px;min-height:38px;height:auto;padding:8px 14px}
+.header nav,.header-cta{font-size:14px}
+.brand span{font-size:9px}
+.eyebrow{font-size:11px;letter-spacing:.12em}
+.hero-description{font-size:16px;max-width:390px}
+.button{font-size:13px}
+.text-link{font-size:13px}
+.hero-copy>.text-link{font-size:12px}
+.hero-note{font-size:12px}
+.values-strip{font-size:12px}
+.section-heading>p{font-size:14px}
+.product-meta small{font-size:13px}
+.product-caption{font-size:11px}
+.subtle,.collection-note{font-size:12px}
+.preview-top,.design-kicker{font-size:10px}
+.preview-under p{font-size:12px;max-width:320px}
+.preview-under .text-link{font-size:12px}
+.preview-top .icon-button span{font-size:12px}
+.view-switch button{font-size:12px;padding:7px 16px}
+.studio-message{font-size:13px}
+.studio-step{font-size:10px;letter-spacing:.09em}
+.design-controls legend{font-size:15px}
+.step-num,.selected-value{font-size:12px}
+.choice-row button{font-size:12px;white-space:normal;line-height:1.35;min-height:43px}
+.field-label,.input-label{font-size:12px;letter-spacing:.04em}
+.input-label small{font-size:10px}
+input,select,textarea{font-size:15px;min-height:44px}
+.initials-row p,.size-guide{font-size:12px}
+.design-summary div>span{font-size:10px}
+.design-summary strong{font-size:14px}
+.request-note,.privacy-note,.status{font-size:12px}
+.process-number{font-size:12px}
+.process article p{font-size:14px;max-width:330px}
+.craft-copy .eyebrow{font-size:11px}
+.craft-copy p:not(.eyebrow){font-size:14px}
+.faq summary{font-size:15px}
+.faq details p{font-size:14px}
+.footer-top>div>p{font-size:11px}
+.footer-top>div>a{font-size:13px}
+.footer-bottom,.footer-bottom button{font-size:11px}
+.dialog-intro .eyebrow{font-size:11px}
+.dialog-intro>p:last-child{font-size:14px}
+.quote-summary{font-size:13px}
+.quote-summary span{font-size:11px}
+.quote-summary .quote-summary-style{font-size:22px}
+.error{font-size:13px}
+#send-options>p:nth-child(2){font-size:14px}
+.fallback-row button{font-size:12px}
+#info-content p,#info-content ol{font-size:14px}
+.review-intro{font-size:14px}
+.quote-summary .quote-review-heading{font-size:14px}
+@media(max-width:1000px){
+  .header nav{font-size:12px;gap:14px}
+  .hero-description{font-size:15px}
+  .studio-step{font-size:9px}
+  .choice-row button{font-size:11px;white-space:normal}
+}
+@media(max-width:700px){
+  .announcement{font-size:11px;min-height:34px}
+  .header-cta{font-size:12px;gap:10px}
+  .brand span{font-size:8px}
+  .hero .eyebrow{font-size:10px}
+  .hero-description{font-size:15px}
+  .hero .button{font-size:12px}
+  .hero-copy>.text-link{font-size:12px;margin:16px 0 0;display:flex;width:max-content}
+  .hero-note{font-size:11px}
+  .values-strip{font-size:11px}
+  .section-heading .eyebrow{font-size:10px}
+  .section-heading>p{font-size:13px}
+  .product-meta small{font-size:11px}
+  .product-caption{font-size:10px}
+  .collection-note{font-size:12px}
+  .preview-top{font-size:10px}
+  .preview-under p{font-size:11px}
+  .studio-step{font-size:9px}
+  .design-controls legend{font-size:14px}
+  .choice-row button{font-size:12px;padding:11px 5px}
+  .field-label,.input-label{font-size:12px}
+  .design-controls select,.design-controls input{font-size:16px}
+  .initials-row p{font-size:11px}
+  .request-note,.privacy-note{font-size:11px}
+  .process article p{font-size:13px}
+  .craft-copy p:not(.eyebrow){font-size:14px}
+  .faq summary,.faq details p{font-size:13px}
+  .footer-top>div>p{font-size:10px}
+  .footer-top>div>a{font-size:13px}
+  .footer-bottom,.footer-bottom button{font-size:10px}
+  .quote-summary{font-size:12px}
+  .dialog-intro>p:last-child{font-size:13px}
+  .fallback-row button{font-size:11px}
+  .button{font-size:13px}
+}
+@media(max-width:390px){
+  .choice-row button{font-size:11px;overflow-wrap:anywhere}
+  .two-fields{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(49px,15vw,66px)}
+  .hero-photo-caption{font-size:9px}
+}
