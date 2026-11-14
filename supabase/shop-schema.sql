@@ -42,7 +42,7 @@ alter table public.product_variants enable row level security;
 revoke all on public.shop_admins from anon, authenticated;
 grant select, insert, update, delete on public.products, public.product_variants to authenticated;
 grant select on public.products, public.product_variants to anon;
-grant execute on function public.is_shop_admin() to authenticated;
+grant execute on function public.is_shop_admin() to anon, authenticated;
 
 create policy "Read published products" on public.products for select to anon,authenticated
 using (is_published or (select public.is_shop_admin()));
