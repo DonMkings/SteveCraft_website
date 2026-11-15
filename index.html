@@ -74,16 +74,26 @@
     <p class="privacy-note">No full home address is needed for a quote. Delivery charges and available collection options will be confirmed with Steve Craft.</p>
   </div>
   <label class="input-label">ADDITIONAL NOTES <small>OPTIONAL</small><textarea name="notes" rows="3" maxlength="1000" placeholder="Fit preferences, timing, or anything you'd like us to know…"></textarea></label>
-  <p class="privacy-note">Your details are only included in the message you choose to send. They aren't stored on this website.</p>
+  <div class="quote-form-section reference-section"><h3 class="quote-section-title">Reference photos <small>optional</small></h3>
+    <p class="privacy-note">Share inspiration for stitching, shape, colour or another footwear style. Select up to 3 JPG, PNG or WebP images (3 MB each). Photos upload only when you confirm the request.</p>
+    <label class="input-label" for="reference-files">ADD REFERENCE IMAGES <small>OPTIONAL</small></label>
+    <input id="reference-files" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+    <p id="reference-count" class="privacy-note">No images selected</p>
+    <div id="reference-previews" class="reference-previews" aria-live="polite"></div>
+    <div id="turnstile-wrap" hidden><p class="privacy-note">Complete this security check to upload your photos.</p><div id="turnstile-widget"></div></div>
+    <p id="reference-error" class="error" role="alert"></p>
+    <p class="privacy-note">Reference images are saved privately in SteveCraft's Supabase storage. A reference ID is included in your request so the team can retrieve the photos; they are not directly attached to WhatsApp or email.</p>
+  </div>
+  <p class="privacy-note">Your text details are only included in the message you choose to send. Selected reference photos are stored in private Supabase storage once uploaded, even if you do not complete sending the message.</p>
   <p id="form-error" class="error" role="alert"></p>
   <button class="button primary full" type="submit">Review my full request <span>↗</span></button>
 </form>
 <div id="quote-review" hidden>
   <h3 class="quote-section-title">Review before sending</h3>
-  <p class="review-intro">Check your design, occasion, gifting, fit and delivery details before preparing the message.</p>
+  <p class="review-intro">Check your design, occasion, gifting, fit, delivery and reference photos before preparing the message.</p>
   <div id="review-summary" class="quote-summary" aria-live="polite"></div>
   <div class="review-actions"><button type="button" id="edit-review" class="button outline full">Edit details <span>↶</span></button><button type="button" id="confirm-request" class="button primary full">Prepare my request <span>↗</span></button></div>
-  <p class="request-note">No payment now. Steve Craft will confirm all details and pricing first.</p>
+  <p id="reference-upload-status" class="status" role="status"></p><p class="request-note">No payment now. Steve Craft will confirm all details and pricing first.</p>
 </div><div id="send-options" hidden><p class="ready-title">Your request is ready.</p><p>Choose how to send it. Your app will open with your full design and contact details. <strong>Press Send there to deliver your request.</strong></p><a id="send-whatsapp" class="button primary full" target="_blank" rel="noopener noreferrer">Open in WhatsApp <span>↗</span></a><a id="send-email" class="button outline full">Open in email <span>↗</span></a><div class="fallback-row"><button type="button" class="text-link" id="copy-request">Copy request</button><button type="button" class="text-link" id="download-request">Download request</button><button type="button" class="text-link" id="edit-request">Edit details</button></div><p id="copy-status" class="status" role="status"></p><p class="request-note">This is a quote enquiry. Your order is placed after you agree the details with Steve Craft.</p></div></dialog>
 <dialog id="shop-product-dialog" class="shop-modal" aria-label="Footwear product details"><button type="button" class="dialog-close" data-shop-close aria-label="Close product">×</button><div id="shop-product-body" class="shop-product-body"></div></dialog>
 <dialog id="shop-cart-dialog" class="shop-modal" aria-labelledby="cart-title"><button type="button" class="dialog-close" data-shop-close aria-label="Close cart">×</button><p class="eyebrow">YOUR STEVE CRAFT ORDER</p><h2 id="cart-title">Your <em>cart.</em></h2><div id="cart-items" class="cart-items"></div><div class="cart-total"><strong>Indicative items total</strong><strong id="cart-total">₦0</strong></div><p class="shop-disclaimer">Stock, shipping and final amounts will be confirmed before payment. No payment is collected here.</p><button type="button" id="cart-order" class="button primary full">Prepare WhatsApp order ↗</button><div id="cart-checkout" hidden><p class="shop-status">Your order enquiry is ready. WhatsApp opens a prepared message; press Send in WhatsApp to contact SteveCraft.</p><a id="cart-whatsapp-link" class="button primary full" target="_blank" rel="noopener noreferrer">Open WhatsApp ↗</a><button type="button" id="cart-edit" class="button outline full">Back to cart</button></div></dialog>

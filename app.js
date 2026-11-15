@@ -1,7 +1,10 @@
 import {STYLES,COLOURS,FINISHES,SOLES,WIDTHS,SIZES,DEFAULT_DESIGN,normaliseDesign,validateRequest,buildMessage,contactLinks} from './model.js';
 import {shoeSVG} from './shoe.js';
+import {setupReferenceImages,selectedReferenceFiles,referenceReviewLabel,uploadReferenceImages} from './reference-upload.js';
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 let design={...DEFAULT_DESIGN},view='profile',message='',pendingDetails=null;
+let referenceUploading=false;
+setupReferenceImages();
 try{const saved=localStorage.getItem('steve-craft-design');if(saved)design=normaliseDesign(JSON.parse(saved));}catch{}
 for(const [key,value] of Object.entries(COLOURS)){
  const b=document.createElement('button');b.type='button';b.className='swatch';b.dataset.colour=key;b.style.backgroundColor=value.hex;b.setAttribute('aria-label',value.name);b.setAttribute('title',value.name);b.setAttribute('aria-pressed',String(design.colour===key));$('#colour-choices').append(b);
@@ -50,7 +53,7 @@ function renderFullReview(c){
  addReviewItem(container,'Preference',{delivery:'Delivery',pickup:'Collection / pickup',discuss:'Discuss later'}[c.deliveryMethod]);
  if(c.deliveryMethod==='delivery'){addReviewItem(container,'City',c.deliveryCity);addReviewItem(container,'State',c.deliveryState);}
  addReviewItem(container,'CONTACT & NOTES',null,true);
- for(const [label,value] of [['Name',c.name],['Email',c.email],['Phone',c.phone||'Not supplied'],['Notes',c.notes||'None']])addReviewItem(container,label,value);
+ for(const [label,value] of [['Name',c.name],['Email',c.email],['Phone',c.phone||'Not supplied'],['Notes',c.notes||'None'],['Reference photos',referenceReviewLabel()]])addReviewItem(container,label,value);
 }
 $('#quote-form').addEventListener('submit',e=>{
  e.preventDefault();const values=Object.fromEntries(new FormData(e.currentTarget));design.size=values.size;
@@ -60,10 +63,19 @@ $('#quote-form').addEventListener('submit',e=>{
  $('#edit-review').focus();
 });
 $('#edit-review').addEventListener('click',()=>{$('#quote-review').hidden=true;$('#quote-form').hidden=false;$('#customer-name').focus();});
-$('#confirm-request').addEventListener('click',()=>{
- if(!pendingDetails)return;message=buildMessage(design,pendingDetails);
- const links=contactLinks(message);$('#send-whatsapp').href=links.whatsapp;$('#send-email').href=links.email;
- $('#quote-review').hidden=true;$('#send-options').hidden=false;$('#copy-status').textContent='';$('#send-whatsapp').focus();
+$('#confirm-request').addEventListener('click',async()=>{
+ if(!pendingDetails||referenceUploading)return;
+ const button=$('#confirm-request'),status=$('#reference-upload-status');
+ button.disabled=true;referenceUploading=true;
+ try{
+  const selected=selectedReferenceFiles();
+  status.textContent=selected.length?'Uploading '+selected.length+' reference image(s) securely…':'';
+  const reference=selected.length?await uploadReferenceImages():null;
+  message=buildMessage(design,{...pendingDetails,referenceId:reference?.referenceId||'',referenceCount:reference?.count||0});
+  const links=contactLinks(message);$('#send-whatsapp').href=links.whatsapp;$('#send-email').href=links.email;
+  $('#quote-review').hidden=true;$('#send-options').hidden=false;$('#copy-status').textContent='';status.textContent='';$('#send-whatsapp').focus();
+ }catch(error){status.textContent=error instanceof Error?error.message:'Unable to upload reference images. Try again or remove them.';}
+ finally{button.disabled=false;referenceUploading=false;}
 });
 $('#edit-request').addEventListener('click',()=>{$('#send-options').hidden=true;$('#quote-review').hidden=false;$('#edit-review').focus();});
 function downloadRequest(){const blob=new Blob([message],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='steve-craft-quote-request.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
