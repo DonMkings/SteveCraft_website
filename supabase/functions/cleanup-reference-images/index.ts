@@ -91,7 +91,7 @@ Deno.serve(async (request) => {
     // Recheck object age and allowed path format immediately before deletion.
     // Supabase SQL RPC also enforces this; never accept object paths from request input.
     const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
-    const pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\/[1-3]\\.(jpg|png|webp)$/;
+    const pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/[1-3]\.(jpg|png|webp)$/;
     const paths = eligible
       .filter((entry) => pattern.test(entry.object_path) &&
         Number.isFinite(Date.parse(entry.uploaded_at)) &&
