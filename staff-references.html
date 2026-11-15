@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Authorized SteveCraft staff reference photo viewer.">
+  <title>Steve Craft | Private Reference Photos</title>
+  <link rel="stylesheet" href="./staff-references.css">
+  <script type="module" src="./staff-references.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./index.html">STEVE CRAFT <span>STAFF TOOLS</span></a>
+    <a href="./index.html">Back to the shop ↗</a>
+  </header>
+  <main class="shell">
+    <p class="eyebrow">Private · Authorized staff only</p>
+    <h1>Reference photographs</h1>
+    <p class="intro">Look up customer design inspiration by Reference ID. Photos stay in private Supabase Storage. Short-lived links are created only after a staff login.</p>
+    <p class="notice" id="status" role="status" aria-live="polite">Checking your session…</p>
+    <section id="login-panel" class="panel" hidden>
+      <h2>Staff sign in</h2>
+      <p>Use the email address already registered as a SteveCraft shop administrator. Non-admin accounts cannot access these photographs.</p>
+      <form id="password-form">
+        <label for="staff-email">Admin email address</label>
+        <input id="staff-email" type="email" autocomplete="username" required>
+        <label for="staff-password">Password</label>
+        <input id="staff-password" type="password" autocomplete="current-password" required>
+        <button type="submit">Sign in</button>
+      </form>
+      <div class="divider">or</div>
+      <button type="button" id="email-link">Email me a sign-in link</button>
+      <p class="hint">Email links require this page's address to be added to Supabase Authentication redirect URLs. A link will only be sent to an existing account.</p>
+    </section>
+    <section id="viewer-panel" class="panel" hidden>
+      <div class="signed-in"><span id="signed-in-as"></span><button type="button" id="sign-out" class="secondary">Sign out</button></div>
+      <h2>Find a customer's images</h2>
+      <form id="reference-form">
+        <label for="reference-id">Reference ID (from WhatsApp quote)</label>
+        <input id="reference-id" type="text" inputmode="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="e.g. 123e4567-e89b-42d3-a456-426614174000" maxlength="36" required>
+        <button type="submit">View private images</button>
+      </form>
+      <p class="hint">Preview and share links expire after 5 minutes. Anyone who receives a signed link can open it until expiry, so only share with authorized staff.</p>
+      <div id="photo-results" class="photos" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer>STEVE CRAFT · Staff access only · Reference images are private</footer>
+</body>
+</html>
