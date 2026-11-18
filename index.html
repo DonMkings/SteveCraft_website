@@ -8,7 +8,7 @@
   <title>Steve Craft — Your sole. Your story.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"><script type="module" src="app.js"></script><script type="module" src="shop.js"></script>
+  <link rel="stylesheet" href="styles.css"><script type="module" src="app.js"></script><script type="module" src="shop.js"></script><script type="module" src="mobile-nav.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -17,6 +17,13 @@
   <a href="#" class="brand" aria-label="Steve Craft home">STEVE CRAFT<span>FOOTWEAR, WITH YOUR SIGNATURE</span></a>
   <nav aria-label="Main navigation"><a href="#collection">The collection</a><a href="#shop">Shop footwear</a><a href="#process">Our process</a><a href="#craft">The craft</a></nav>
   <a class="header-cta" href="#studio">Design your pair <span>↗</span></a>
+  <div class="mobile-nav-controls">
+    <a class="mobile-shop-link" href="#shop">Shop</a>
+    <details class="mobile-menu" id="mobile-menu">
+      <summary aria-label="Open mobile navigation"><span class="mobile-menu-label">Menu</span><span class="mobile-menu-icon" aria-hidden="true"><span></span><span></span><span></span></span></summary>
+      <nav aria-label="Mobile navigation"><a href="#shop">Shop footwear</a><a href="#collection">The collection</a><a href="#process">Our process</a><a href="#craft">The craft</a><a href="#studio">Design your pair ↗</a></nav>
+    </details>
+  </div>
 </header>
 <main id="main">
   <section class="hero">
