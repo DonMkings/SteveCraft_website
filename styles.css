@@ -209,6 +209,9 @@ input,select,textarea{font-size:15px;min-height:44px}
 }
 @media(prefers-reduced-motion:reduce){.mobile-menu-icon span{transition:none}}
 
-.header > .brand { display: inline-flex; align-items: center; gap: 8px; }
+.header > .brand,
+.footer-top > .brand { display: inline-flex; align-items: center; gap: 8px; }
 .brand-emblem { width: clamp(28px, 3vw, 40px); height: auto; flex: none; mix-blend-mode: multiply; }
 .brand-wordmark { font-weight: inherit; }
+
+.footer-top > .brand { align-self: flex-start; }
